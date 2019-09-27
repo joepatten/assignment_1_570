@@ -2,6 +2,7 @@
 Joe Patten
 
 This assignment was done 100\% all by myself. 
+Note: the figures and output might be a bit different than what is written in the pdf as I ran the code many times and did not feel the need to updated my pdf (as the figures were generally similar to previous versions).
 
 ## run_code.sh
 In order to run the code for assignment 1, you can either run the run_code.sh shell script, or run `python ./Assignment_1.py` in your shell. 
