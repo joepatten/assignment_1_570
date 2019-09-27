@@ -3,7 +3,6 @@ import pandas as pd
 
 
 def perceptron(X, labels, iterations=1, obs=None, w=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if w is None:
         w = np.random.random(len(X[0])).reshape(-1,1)
     if mistakes is None:
@@ -22,7 +21,7 @@ def perceptron(X, labels, iterations=1, obs=None, w=None, mistakes=None):
             y = labels[i]
 
             yhat = np.sign(np.dot(w.T,x))
-            if yhat != y: #correct for perceptron, but need to consider pa
+            if yhat != y:
                 w += y*x
                 m += 1
             
@@ -41,7 +40,6 @@ def perceptron(X, labels, iterations=1, obs=None, w=None, mistakes=None):
 
 
 def perceptron_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if mistakes is None:
         mistakes = []
     indexes = np.random.permutation(range(X.shape[0]))[:obs]
@@ -57,7 +55,7 @@ def perceptron_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
         m = 0
         
         for i in indexes:
-            x = X[i]#.reshape(-1,1)
+            x = X[i]
             y = labels[i]
             
             idx = np.argmax([np.dot(w.T, make_F(x, k, classes)) for k in classes])
@@ -65,7 +63,7 @@ def perceptron_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
             F_yhat = make_F(x, yhat, classes)
             F_y = make_F(x, y, classes)
             
-            if y != yhat: #correct for perceptron, but need to consider pa
+            if y != yhat:
                 w += (F_y - F_yhat)
                 m += 1
             
@@ -92,6 +90,3 @@ def make_F(x, k, classes):
         else:
             F = np.concatenate([F, np.zeros(len(x))], axis=0)
     return F.reshape(-1, 1)
-
-if __name__ == '__main__':
-    wmc, mmc = perceptron_MC(images, labels_raw, iterations=1)

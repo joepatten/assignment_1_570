@@ -21,26 +21,30 @@ iterations_b_d = 20
 print('5.1a processing...')
 w, mistakes = perceptron(images, labels, iterations=iterations_a)
 w_pa, mistakes_pa = pa(images, labels, iterations=iterations_a)
+# a) Plot the data
 plot_data(pd.concat([mistakes, mistakes_pa], axis=1), y_lst = ['perceptron mistakes','passive aggressive mistakes'], filename='./figures/5_1/5_1_a.')
 print('5.1a done\n')
 
-# b)
+# b) Compute the accuracy for perceptron and PA algorithms on training and testing data
 print('5.1b processing...')
 percept_scores = acc_scores(iterations_b_d, perceptron, images, test_images, labels, test_labels)
 pa_scores = acc_scores(iterations_b_d, pa, images, test_images, labels, test_labels)
+# b) Plot the data
 plot_data(percept_scores, y_lst = percept_scores.columns, filename='./figures/5_1/5_1_b_perceptron.')
 plot_data(pa_scores, y_lst = pa_scores.columns, filename='./figures/5_1/5_1_b_pa.')
 print('5.1b done\n')
 
-# c)
+# c) Repeat part b with averaged perceptron algorithm
 print('5.1c processing...')
 avg_percept_scores = acc_scores(iterations_b_d, avg_perceptron, images, test_images, labels, test_labels)
+# c) plot the data
 plot_data(avg_percept_scores, y_lst = avg_percept_scores.columns, filename='./figures/5_1/5_1_c.')
 print('5.1c done\n')
 
-# d)
+# d) Vary the number of observations used. Keep iterations at 20 and plot the accuracy for each observation size (perceptron)
 print('5.1d processing...')
 g_learning_df = g_learning_curve(perceptron, images, test_images, labels, test_labels, iterations=iterations_b_d)
+# d) plot the data
 plot_data(g_learning_df, y_lst = g_learning_df.columns, filename='./figures/5_1/5_1_d.')
 print('5.1d done\n')
 
@@ -61,31 +65,35 @@ g_learning_df.to_csv(r'./output/5_1/5_1_d.csv')
 print('5.2a processing...')
 w, mistakes = perceptron_MC(images, labels_raw, iterations=iterations_a)
 w_pa, mistakes_pa = pa_MC(images, labels_raw, iterations=iterations_a)
+# a) Plot the data
 plot_data(pd.concat([mistakes, mistakes_pa], axis=1), y_lst = ['perceptron mistakes','passive aggressive mistakes'], filename='./figures/5_2/5_2_a.')
 print('5.2a done\n')
 
-# b)
+# b) Compute the accuracy for perceptron and PA algorithms on training and testing data
 print('5.2b processing...')
 percept_scores = acc_scores(iterations_b_d, perceptron_MC, images, test_images, labels_raw, test_labels_raw, binary=False)
 pa_scores = acc_scores(iterations_b_d, pa_MC, images, test_images, labels_raw, test_labels_raw, binary=False)
+# b) Plot the data
 plot_data(percept_scores, y_lst = percept_scores.columns, filename='./figures/5_2/5_2_b_perceptron.')
 plot_data(pa_scores, y_lst = pa_scores.columns, filename='./figures/5_2/5_2_b_pa.')
 print('5.2b done\n')
 
-# c)
+# c) Repeat part b with averaged perceptron algorithm
 print('5.2c processing...')
 avg_percept_scores = acc_scores(iterations_b_d, avg_perceptron_MC, images, test_images, labels_raw, test_labels_raw, binary=False)
+# c) plot the data
 plot_data(avg_percept_scores, y_lst = avg_percept_scores.columns, filename='./figures/5_2/5_2_c.')
 print('5.2c done\n')
 
-# d)
+# d) Vary the number of observations used. Keep iterations at 20 and plot the accuracy for each observation size (perceptron)
 print('5.2d processing...')
 g_learning_df = g_learning_curve(perceptron_MC, images, test_images, labels_raw, test_labels_raw, iterations=iterations_b_d, binary=False)
+# d) plot the data
 plot_data(g_learning_df, y_lst = g_learning_df.columns, filename='./figures/5_2/5_2_d.')
 print('5.2d done\n')
 
 #==============================================================================
-#                       Output data
+#                       Output MC data
 #==============================================================================
 mistakes.to_csv(r'./output/5_2/5_2_a_perceptron.csv')
 mistakes_pa.to_csv(r'./output/5_2/5_2_a_passive.csv')

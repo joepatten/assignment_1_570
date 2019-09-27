@@ -6,7 +6,6 @@ import os
     
 
 def pa(X, labels, iterations=1, obs=None, w=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if w is None:
         w = np.random.random(len(X[0])).reshape(-1,1)
     if mistakes is None:
@@ -27,7 +26,7 @@ def pa(X, labels, iterations=1, obs=None, w=None, mistakes=None):
             yhat = np.sign(np.dot(w.T,x))
             tau = max(0,(1-y*(np.dot(w.T,x)))/np.dot(x.T,x)**2)
             
-            if yhat != y: #correct for perceptron, but need to consider pa
+            if yhat != y:
                 m += 1
                 
             w += tau*y*x
@@ -47,7 +46,6 @@ def pa(X, labels, iterations=1, obs=None, w=None, mistakes=None):
 
 
 def pa_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if mistakes is None:
         mistakes = []
     if obs is None:
@@ -63,10 +61,8 @@ def pa_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
         m = 0
         
         for i in indexes:
-            x = X[i]#.reshape(-1,1)
+            x = X[i]
             y = labels[i]
-            
-            # first calculate loss
             
             idx = np.argmax([np.dot(w.T, make_F(x, k, classes)) for k in classes])
             yhat = classes[idx]
@@ -76,7 +72,7 @@ def pa_MC(X, labels, iterations=1, obs=None, w=None, mistakes=None):
             
             
             
-            if yhat != y: #correct for perceptron, but need to consider pa
+            if yhat != y: 
                 m += 1
                 tau = max(0,(1-y*(np.dot(w.T, (F_y_F_yhat))))/np.dot((F_y_F_yhat).T, (F_y_F_yhat))**2)
                 w += tau*(F_y_F_yhat)

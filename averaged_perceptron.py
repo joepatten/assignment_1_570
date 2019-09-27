@@ -5,7 +5,6 @@ import os
 
 
 def avg_perceptron(X, labels, iterations=1, obs=None, w=None, u=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if w is None:
         w = np.random.random(len(X[0])).reshape(-1,1)
     if u is None:
@@ -27,7 +26,7 @@ def avg_perceptron(X, labels, iterations=1, obs=None, w=None, u=None, mistakes=N
             y = labels[i]
 
             yhat = np.sign(np.dot(w.T,x))
-            if yhat != y: #correct for perceptron, but need to consider pa
+            if yhat != y: 
                 w += y*x
                 u += c*y*x
                 
@@ -47,9 +46,8 @@ def avg_perceptron(X, labels, iterations=1, obs=None, w=None, u=None, mistakes=N
     
     return w, mistakes
 
-#need to correct this
+
 def avg_perceptron_MC(X, labels, iterations=1, obs=None, w=None, u=None, mistakes=None):
-    # X = np.append(X,np.ones([len(X),1]),1)
     if mistakes is None:
         mistakes = []
     if obs is None:
@@ -76,7 +74,7 @@ def avg_perceptron_MC(X, labels, iterations=1, obs=None, w=None, u=None, mistake
             F_yhat = make_F(x, yhat, classes)
             F_y = make_F(x, y, classes)
             
-            if y != yhat: #correct for perceptron, but need to consider pa
+            if y != yhat: 
                 w += (F_y - F_yhat)
                 u += c*(F_y - F_yhat)
                 
@@ -106,6 +104,3 @@ def make_F(x, k, classes):
         else:
             F = np.concatenate([F, np.zeros(len(x))], axis=0)
     return F.reshape(-1, 1)
-
-if __name__ == '__main__':
-    wmc, mmc = avg_perceptron_MC(images, labels_raw, iterations=3)
