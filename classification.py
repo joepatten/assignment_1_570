@@ -94,10 +94,11 @@ def load_data():
 
 
     for filename in filenames:
+        if filename in os.listdir('.'):
+            continue
         print(f'Downloading {filename} from github.')
         f = os.path.join(link, filename)
-        wget.download(f, './data/fashion')
-    
+        wget.download(f, '.')
     
     data = input_data.read_data_sets('./data/fashion')
     

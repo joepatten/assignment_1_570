@@ -8,7 +8,7 @@ from passive_aggressive import *
 #                       Load in data
 #==============================================================================
 print('Loading data...')
-images, labels, labels_raw, test_images, tes_labels, test_labels_raw = load_data()
+images, labels, labels_raw, test_images, test_labels, test_labels_raw = load_data()
 print('\nData loaded')
 
 #==============================================================================
