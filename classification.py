@@ -94,13 +94,13 @@ def load_data():
 
 
     for filename in filenames:
-        if filename in os.listdir('.'):
+        if filename in os.listdir('./data'):
             continue
         print(f'Downloading {filename} from github.')
         f = os.path.join(link, filename)
-        wget.download(f, '.')
+        wget.download(f, './data')
     
-    data = input_data.read_data_sets('./data/fashion')
+    data = input_data.read_data_sets('./data')
     
     # training labels
     labels_raw = data.train.labels
