@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import wget
+import os
+from tensorflow.examples.tutorials.mnist import input_data
 
 
 def view_image(obs):
@@ -11,16 +14,14 @@ def view_image(obs):
 
 def plot_data(df, y_lst, filename):
     for y_var in y_lst:
-        print(y_var)
         x_name = df.index.name
         df.reset_index().plot(x=x_name, y=y_var, legend=False)
         plt.ylabel(y_var.split()[-1])
-        f = '_{}'.format(y_var.split()[0]).join(filename.rsplit('.',1))
-        print(f)
+        f = '_{}'.format(y_var.split()[0]).join(filename.rsplit('.', 1))
         plt.savefig(f, bbox_inches="tight")
         plt.title(y_var)
         plt.tight_layout()
-        #plt.show()
+        
 
 
 def g_learning_curve(func, X_train, X_test, y_train, y_test, binary=True, iterations=20):
@@ -85,3 +86,35 @@ def plot_curves(df, x, y_lst):
         plt.title(y_var)
         plt.show()
         plt.savefig('/figures/' + y_var.replace(' ','_') + '_accuracy.png')
+
+
+def load_data():
+    filenames = ['t10k-images-idx3-ubyte.gz', 't10k-labels-idx1-ubyte.gz', 'train-images-idx3-ubyte.gz', 'train-labels-idx1-ubyte.gz']
+    link = r'https://github.com/zalandoresearch/fashion-mnist/raw/master/data/fashion/'
+
+
+    for filename in filenames:
+        print(f'Downloading {filename} from github.')
+        f = os.path.join(link, filename)
+        wget.download(f, './data/fashion')
+    
+    
+    data = input_data.read_data_sets('./data/fashion')
+    
+    # training labels
+    labels_raw = data.train.labels
+    labels = [-1 if x%2 == 0 else 1 for x in labels_raw]
+    labels = np.array(labels)
+    
+    # test labels
+    test_labels_raw = data.test.labels
+    test_labels = [-1 if x%2 == 0 else 1 for x in test_labels_raw]
+    test_labels = np.array(test_labels)
+    
+    # training features
+    images = data.train.images
+    
+    # test feaures
+    test_images = data.test.images
+    
+    return images, labels, labels_raw, test_images, test_labels, test_labels_raw
